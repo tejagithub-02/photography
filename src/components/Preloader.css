@@ -1,0 +1,291 @@
+/* src/components/Preloader.css */
+.preloader-container {
+    height: 100vh;
+    background: linear-gradient(135deg, #0f0f0f, #111822);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: opacity 0.8s ease;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .fade-out {
+    opacity: 0;
+  }
+  
+  /* Camera Body */
+  .camera-body {
+    width: 280px;
+    height: 220px;
+    background: linear-gradient(145deg, #1f1823, #382b3f);
+    border-radius: 15px;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 -5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .camera-top {
+    position: absolute;
+    top: -25px;
+    left: 50px;
+    width: 180px;
+    height: 30px;
+    background: #523020;
+    border-radius: 8px 8px 0 0;
+    box-shadow: inset 0 -5px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .camera-grip {
+    position: absolute;
+    right: -15px;
+    top: 50px;
+    width: 30px;
+    height: 100px;
+    background: linear-gradient(to right, #382b3f, #1f1823);
+    border-radius: 0 10px 10px 0;
+  }
+  
+  .camera-viewfinder {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 30px;
+    background: #111822;
+    border-radius: 5px;
+    border: 2px solid #523020;
+  }
+  
+  /* Shutter Button */
+  .light-button {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: radial-gradient(circle, #382b3f, #1f1823);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3),
+                inset 0 0 10px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    z-index: 10;
+  }
+  
+  .light-button.clicked {
+    animation: buttonPress 0.5s ease forwards;
+  }
+  
+  .shutter-icon {
+    font-size: 2.2rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .light-button.clicked .shutter-icon {
+    transform: scale(0.9);
+  }
+  
+  .progress-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(
+      #523020 var(--progress),
+      transparent var(--progress)
+    );
+    clip-path: circle(46%);
+    transition: background 0.3s ease;
+  }
+  
+  .loading-text {
+    position: absolute;
+    bottom: -25px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.8);
+    animation: fadeInOut 1.5s infinite;
+  }
+  
+  /* Lens */
+  .camera-lens {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #1f1823, #382b3f);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .lens-outer {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: #111822;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .lens-inner {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, 
+      rgba(255, 255, 255, 0.1), 
+      transparent 70%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .aperture {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, 
+      rgba(82, 48, 32, 0.8) 0%, 
+      rgba(31, 24, 35, 0.9) 50%, 
+      rgba(15, 15, 15, 1) 100%);
+    border-radius: 50%;
+    animation: aperturePulse 2s infinite ease-in-out;
+  }
+  
+  .aperture.shutter-active {
+    animation: shutterClick 1.2s ease forwards;
+  }
+  
+  /* Film Strip */
+  .film-strip {
+    position: absolute;
+    bottom: -20px;
+    left: 20px;
+    width: 240px;
+    height: 30px;
+    background: #0f0f0f;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+    align-items: center;
+    border-radius: 3px;
+    animation: filmMove 0.8s infinite linear;
+  }
+  
+  .film-perf {
+    width: 15px;
+    height: 20px;
+    background: repeating-linear-gradient(
+      to bottom,
+      #111822,
+      #111822 4px,
+      #523020 4px,
+      #523020 8px
+    );
+  }
+  
+  /* Title */
+  .preloader-title {
+    margin-top: 40px;
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .title-word {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: titleReveal 0.8s 0.5s forwards cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  
+  .title-word:nth-child(2) {
+    animation-delay: 0.8s;
+  }
+  
+  /* Shutter Effect */
+  .shutter-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 20;
+  }
+  
+  .shutter-top, .shutter-bottom {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: #0f0f0f;
+    z-index: 21;
+  }
+  
+  .shutter-top {
+    top: 0;
+    animation: shutterTop 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  }
+  
+  .shutter-bottom {
+    bottom: 0;
+    animation: shutterBottom 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  }
+  
+  /* Animations */
+  @keyframes aperturePulse {
+    0%, 100% { transform: scale(1); opacity: 0.8; }
+    50% { transform: scale(1.02); opacity: 1; }
+  }
+  
+  @keyframes shutterClick {
+    0% { transform: scale(1); opacity: 1; }
+    10% { transform: scale(0.9); opacity: 0.2; }
+    20% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1); opacity: 0; }
+  }
+  
+  @keyframes filmMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-15px); }
+  }
+  
+  @keyframes buttonPress {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.1); }
+    50% { transform: scale(0.95); box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+  }
+  
+  @keyframes titleReveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes fadeInOut {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+  
+  @keyframes shutterTop {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+  }
+  
+  @keyframes shutterBottom {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(100%); }
+  }
